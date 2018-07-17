@@ -40,8 +40,8 @@ vector<int> findMinHeightTrees(int n, vector<pair<int, int>>& edges) {
 
 	g.assign(inp.begin(), inp.end());
 	for (int i = 0; i < edges.size(); i++) {
-		g[edges.first][edges.second] = true;
-		g[edges.second][edges.first] = true;
+		g[edges[i].first][edges[i].second] = true;
+		g[edges[i].second][edges[i].first] = true;
 	}
 	dist.assign(idist.begin(), idist.end());
 
