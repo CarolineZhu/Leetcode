@@ -4,26 +4,23 @@
 using namespace std;
 
 RandomListNode *copyRandomList(RandomListNode *head) {
-	if (head == NULL) return NULL;
-	RandomListNode* pre = NULL;
-	vector<RandomListNode*> nodeVo, nodeVn;
-	int i = 0;
-	for (RandomListNode* r = head; r != NULL; r = r -> next, i++) {
+	RandomListNode *r, *nhead = NULL, *next;
+	for (r = head; r != NULL; r = next) {
+		next = r -> next;
 		RandomListNode* n = new RandomListNode(r -> label);
-		nodeVn.push_back(n);
-		r -> label = i;
-		if (pre != NULL) pre -> next = n;
-		pre = n;
+		n -> next = r -> next;
+		r -> next = n;
 	}
-	for (RandomListNode* r = head; r != NULL; r = r -> next) {
-		nodeVo.push_back(r -> random);
+	for (r = head; r != NULL; r = r -> next -> next) {
+		if (r -> random) r -> next -> random = r -> random -> next;
+		else r -> next -> random = NULL;
 	}
-	i = 0;
-	for (RandomListNode* r = nodeVn[0]; r != NULL; r = r -> next, i++) {
-		if (nodeVo[i]) 
-			r -> random = nodeVn[nodeVo[i] -> label];
-		else 
-			r -> random = NULL;
+	for (r = head; r != NULL; r = next) {
+		if (r == head) nhead = r -> next;
+		next = r -> next;
+		if (r -> next)
+			r -> next = r -> next -> next;
+		else r -> next = NULL;
 	}
-	return nodeVn[0];
+	return nhead;
 }
