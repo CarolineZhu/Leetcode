@@ -21,7 +21,7 @@ int networkDelayTime(vector<vector<int>>& times, int N, int K) {
             }
         }
         if (posmin != -1) visit[posmin] = true;
-        else continue;
+        else return -1;
         for (int j = 0; j < N; j++) {
             if (!visit[j] && dist[posmin] + g[posmin][j] < dist[j]) {
                 dist[j] = dist[posmin] + g[posmin][j];
